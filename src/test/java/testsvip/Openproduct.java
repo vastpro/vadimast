@@ -32,7 +32,7 @@ public class Openproduct {
         wd.findElement(By.xpath("//form[@id='search-form']/button")).click();
         wd.findElement(By.xpath("//*[contains(@class, 'list-products') and contains(@data-position, '1')]")).click();
         wd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-        wd.findElement(By.id("addToBasket")).click();
+        wd.findElement(By.xpath("//div[@class='product-cart']//button[.='Добавить в корзину']")).click();
         Thread.sleep(2000);
         wd.findElement(By.linkText("Оформить мои покупки")).click();
         wd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
