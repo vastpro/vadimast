@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -35,6 +36,19 @@ public class General {
         wd.findElement(By.linkText("ВЫХОД")).click();
     }
 
+    public static String passGen() { //Генератор паролей
+        String pass = "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+        String passGen = "";
+        Random r = new Random();
+        char c ;
+        for(int i=0; i<6; i++){
+            c = pass.charAt(r.nextInt(pass.length()));
+            passGen = passGen + c;
+            }
+        return passGen;
+    }
+
+
     public void logIn() { //Логин на сайте
         wd.findElement(By.linkText("Вход")).click();
         wd.findElement(By.id("user-name")).click();
@@ -58,7 +72,7 @@ public class General {
         wd.findElement(By.id("email")).sendKeys(CreateEmailName());
         wd.findElement(By.id("pw")).click();
         wd.findElement(By.id("pw")).clear();
-        wd.findElement(By.id("pw")).sendKeys("23456");
+        wd.findElement(By.id("pw")).sendKeys(passGen());
         wd.findElement(By.id("register")).click();
         wd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         wd.findElement(By.xpath("//form[@id='registration2-pane']//button[.='Пропустить']")).click();

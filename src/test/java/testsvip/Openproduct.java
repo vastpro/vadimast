@@ -16,19 +16,21 @@ public class Openproduct {
     Random random = new Random();
     String[] userFemaleFirstName = {"Иванова","Смирнова","Кузнецова","Попова","Васильева","Петрова"};
     String[] userFemaleName = {"Мария","Анна", "Анастасия", "Виктория", "Елизавета", "Полина"};
-    String[] userFemaleFatherName = {" Александровна"," Михаиловна"," Иванова"," Дмитриевна"," Кирилловна"," Андреевнв"};
+    String[] userFemaleFatherName = {" Александровна"," Михаиловна"," Ивановна"," Дмитриевна"," Кирилловна"," Андреевна"};
 
 
     @Before
     public void setUp() throws Exception {
         wd = new ChromeDriver();
-        wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        Thread.sleep(2000);
         wd.manage().window().maximize();
+
     }
 
     @Test
     public void Openproduct() throws InterruptedException {
         wd.get("https://www.kupivip.ru");
+        wd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         wd.findElement(By.xpath("//form[@id='search-form']/button")).click();
         wd.findElement(By.xpath("//*[contains(@class, 'list-products') and contains(@data-position, '1')]")).click();
         wd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
@@ -44,16 +46,17 @@ public class Openproduct {
         wd.findElement(By.id("emailAddressField")).sendKeys(General.CreateEmailName());
         wd.findElement(By.id("phone")).click();
         wd.findElement(By.id("phone")).clear();
-        wd.findElement(By.id("phone")).sendKeys("+7 (999) 309-99-99");
+        wd.findElement(By.id("phone")).sendKeys("+7 (999) "+random.nextInt(999)+"-"+random.nextInt(99)+"-"+random.nextInt(99));
         wd.findElement(By.id("address")).click();
         wd.findElement(By.id("address")).clear();
         wd.findElement(By.id("address")).sendKeys("Смоленск Ленина 10");
         wd.findElement(By.cssSelector("label.control-label.dotted")).click();
         wd.findElement(By.id("comment")).click();
         wd.findElement(By.id("comment")).clear();
-        wd.findElement(By.id("comment")).sendKeys("Тест");
+        wd.findElement(By.id("comment")).sendKeys("Тест "+General.passGen());
         Thread.sleep(1000);
         wd.findElement(By.id("buy")).click();
+        Thread.sleep(1000);
         wd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         wd.findElement(By.linkText("Личный кабинет")).click();
         wd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
@@ -69,7 +72,8 @@ public class Openproduct {
 
     @After
     public void tearDown() {
-       // wd.quit();
+        //wd.quit();
+        System.out.println("ТЕСТ ПРОЙДЕН УСПЕШНО");
     }
 
     public static boolean isAlertPresent(FirefoxDriver wd) {
